@@ -181,7 +181,7 @@ def train_ai():
 
             # Check if the game is over for either agent
             game_over = game_over1 or game_over2
-
+        
         print(f"Episode {episode + 1} completed")
 
 def game_loop(training_mode=False):
