@@ -23,26 +23,30 @@ class QLearningAgent:
         # Retrieve current Q value
         current_q = self.q_table[state, action_index]
 
-        # Check if current_q is a scalar
-        if not np.isscalar(current_q):
-            print(f"current_q is not a scalar: {current_q}")
-
         # Retrieve maximum Q value for next state
         max_future_q = np.max(self.q_table[next_state])
 
-        # Check if max_future_q is a scalar
+        # Check if current_q, reward, and max_future_q are scalars
+        if not np.isscalar(current_q):
+            current_q = current_q[0]  # or however you want to handle it
+        if not np.isscalar(reward):
+            reward = reward[0]  # or however you want to handle it
         if not np.isscalar(max_future_q):
-            print(f"max_future_q is not a scalar: {max_future_q}")
+            max_future_q = max_future_q[0]  # or however you want to handle it
 
         # Calculate new Q value
         new_q = (1 - self.learning_rate) * current_q + self.learning_rate * (reward + self.discount_factor * max_future_q)
 
+            # Update Q-table
+        self.q_table[state, action_index] = new_q
+        # Retrieve maximum Q value for next state
+
+        # Check if max_future_q is a scalar
+        if not np.isscalar(max_future_q):
+            print(f"max_future_q is not a scalar: {max_future_q}")
         # Check if new_q is a scalar
         if not np.isscalar(new_q):
             print(f"new_q is not a scalar: {new_q}")
-
-        # Update Q-table
-        self.q_table[state, action_index] = new_q
 
         # Debug prints
         print(f"State: {state}, Type: {type(state)}")
